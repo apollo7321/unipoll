@@ -10,8 +10,20 @@
 	    <h2 class="form-heading">Create New Poll</h2>
 
 	    <div class="form-group">
-			Enter poll selection separated by comma:
-	        <input name="topics" type="text" class="form-control" placeholder="git,gitlab,pipeline,..." th:field="*{topics}"/>
+			<div>
+				Name: <br\>
+				<input name="name" type="text" class="form-control" placeholder="Poll March 2025" th:field="*{name}"/>
+				<!-- <div th:each="err : ${#fields.errors('name')}" th:text="${err}"/> -->
+				<span th:if="${name_error != null}" th:text=${name_error}/>
+			</div>
+			
+			
+			<div>
+				Choices (separated by comma): <br\>
+		        <input name="topics" type="text" class="form-control" placeholder="git,gitlab,pipeline,..." th:field="*{topics}"/>
+				<!-- <div th:each="err : ${#fields.errors('topics')}" th:text="${err}"/> -->
+				<span th:if="${topics_error != null}" th:text=${topics_error}/>
+			</div>
 
 	        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 

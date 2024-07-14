@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>All Polls</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div class="container">
+		<h2 class="form-heading">List of all polls</h2>
+		<h3 th:text="${'Total of ' + totalNum + ' polls.'}"/>
+		<div class="form-group">
+			<table>
+				<thead>
+					<th>Name</th>
+					<th>Votes</th>
+					<th>Deleted</th>
+					<th>Actions</th>
+				</thead>
+				<tbody>
+					<tr th:each="poll: ${polls}">
+						<td th:text="${poll.name}" />
+						<td th:text="${poll.choices.size()}" />
+						<td th:text="${{poll.deleted}}" />
+						<td>
+							<a th:href="@{/delete(id=${poll.id})}">Delete</a>
+							<a th:href="@{/vote(id=${poll.id})}">Participate</a>
+							<a th:href="@{/results(id=${poll.id})}">Show results</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div>
+				Page <span th:text="${currentPage}"/> of <span th:text="${totalPages}"/> pages.
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

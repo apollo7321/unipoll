@@ -53,10 +53,6 @@ public class ResultController {
 	@Autowired 
 	private VoteRepository voteRepo;
 	
-//	public String showAll(Model model) {
-//		return "all_polls";
-//	}
-	
 	@GetMapping("/results")
 	public String show(
 			@RequestParam(name = "id", required = true) Long id, 

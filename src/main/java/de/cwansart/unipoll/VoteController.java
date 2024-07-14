@@ -67,7 +67,7 @@ public class VoteController {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
 		}
 		
-		String userId = String.valueOf(Math.random()*1000); //request.getRemoteAddr();
+		String userId = request.getRemoteAddr();
 		
 		// check if user already voted
 		if (voteRepo.findByIdAndUserId(id, userId).isPresent()) {
@@ -91,7 +91,7 @@ public class VoteController {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
 		}
 		
-		String userId = String.valueOf(Math.random()*1000); //request.getRemoteAddr();
+		String userId = request.getRemoteAddr();
 		
 		// check if user has already voted
 		if (voteRepo.findByIdAndUserId(id, userId).isPresent()) {

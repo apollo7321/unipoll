@@ -2,9 +2,9 @@ package de.cwansart.unipoll;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface PollRepository extends Repository<Poll, Long> {
+public interface PollRepository extends PagingAndSortingRepository<Poll, Long> {
 	Poll save(Poll poll);
 	Optional<Poll> findById(Long id);
 }

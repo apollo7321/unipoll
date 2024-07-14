@@ -8,18 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class AuthService {
-	private final String storedPassword = "$2a$12$2R9Zcwr8gaslSNqV1ee6K.qDZutsnRkRaGaEeRkbBzYtDumFtCJdK";
+	private final String storedPassword = "$2a$10$r9rH7cW8tIOJnzPX81SyOOTlAM0xNMPUf/Jvqr2IMEHpyuqN.lj8y";
 	private boolean isAuthenticated = false;
 	
 	public boolean isAuthenticated() {
-//		return isAuthenticated;
-		return true;
+		return isAuthenticated;
 	}
 	
 	public boolean login(String password) {
-//		isAuthenticated = BCrypt.checkpw(password, storedPassword);
-//		return this.isAuthenticated;
-		isAuthenticated = true;
-		return isAuthenticated;
+		isAuthenticated = BCrypt.checkpw(password, storedPassword);
+		return this.isAuthenticated;
 	}
 }

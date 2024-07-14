@@ -12,7 +12,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 class CreateForm {
+	private String name;
 	private String topics;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getTopics() {
 		return topics;
 	}
@@ -32,7 +41,7 @@ public class CreateController {
 	@GetMapping("/create")
 	public String create(Model model) {
 		if (!auth.isAuthenticated()) {
-			return "redirect:/login";
+			return "redirect:/login?p=create";
 		}
 		model.addAttribute("createForm", new CreateForm());
 		return "create";
@@ -41,16 +50,25 @@ public class CreateController {
 	@PostMapping("/create")
 	public String doCreate(@ModelAttribute("createForm") CreateForm createForm, Model model) {
 		if (!auth.isAuthenticated()) {
-			return "redirect:/login";
+			return "redirect:/login?p=create";
+		}
+
+		// TODO: check error validation with BindingResult and @Valid with Spring Boot
+		if (createForm.getName() == null || createForm.getName().isBlank()) {
+			model.addAttribute("name_error", "Missing name!");
+			model.addAttribute("form", new CreateForm());
+			return "create";
 		}
 		
 		List<String> topics = Arrays.asList(createForm.getTopics().split(","));
 		if (topics.isEmpty()) {
-			model.addAttribute("error", "Topics may not be empty!");
+			model.addAttribute("topics_error", "Topics may not be empty!");
 			model.addAttribute("form", new CreateForm());
 			return "create";
 		}
+		
 		Poll poll = new Poll();
+		poll.setName(createForm.getName());
 		poll.setChoices(topics.stream().map(t -> new Choice(t)).collect(Collectors.toList()));
 		poll = repo.save(poll);
 		return "redirect:/vote?id=" + poll.getId();
