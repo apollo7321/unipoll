@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Poll Result</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div class="container">
+	    <h2 class="form-heading" th:text="${'Results for poll #' + id}"></h2>
+	    <div class="form-group">
+			<table>
+				<thead>
+					<th>Name</th>
+					<th>Votes</th>
+				</thead>
+				<tbody>
+				    <tr th:each="result: ${results}">
+						<td th:text="${result.name}"/>
+						<td th:text="${result.count}"/>
+				    </tr>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</body>
+</html>
