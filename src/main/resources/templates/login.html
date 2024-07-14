@@ -3,19 +3,23 @@
 <head> 
     <title>Login</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container">
+
       <form class="form-signin" method="POST" th:action="@{/login(p=${page})}" th:object="${loginForm}">
         <h2 class="form-heading">Log in</h2>
 
-        <div class="form-group">
-            <input name="password" type="password" class="form-control" placeholder="Password" th:field="*{password}"/>
-            <span class="has-error" th:text="${error}"></span>
-
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+		<div class="input-group mb-3">
+		  <span class="input-group-text" id="password-input">Password</span>
+		  <input type="password" th:class="${error}? 'is-invalid form-control' : 'form-control'" placeholder="Password" aria-label="Password" aria-describedby="password-input" th:field="*{password}"/>
+		  <div class="invalid-feedback" th:text="${error}"/>
+		</div>
+		
+		<div class="btn-group" role="group" aria-label="Login Button Box">
+            <button class="btn btn-primary" type="submit">Log In</button>
         </div>
       </form>
     </div>

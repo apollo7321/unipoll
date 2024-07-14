@@ -4,36 +4,45 @@
 <head>
 	<title>All Polls</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
 	<div class="container">
 		<h2 class="form-heading">List of all polls</h2>
 		<h3 th:text="${'Total of ' + totalNum + ' polls.'}"/>
-		<div class="form-group">
-			<table>
-				<thead>
-					<th>Name</th>
-					<th>Votes</th>
-					<th>Deleted</th>
-					<th>Actions</th>
-				</thead>
-				<tbody>
-					<tr th:each="poll: ${polls}">
-						<td th:text="${poll.name}" />
-						<td th:text="${poll.choices.size()}" />
-						<td th:text="${{poll.deleted}}" />
-						<td>
-							<a th:href="@{/delete(id=${poll.id})}">Delete</a>
-							<a th:href="@{/vote(id=${poll.id})}">Participate</a>
-							<a th:href="@{/results(id=${poll.id})}">Show results</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div>
-				Page <span th:text="${currentPage}"/> of <span th:text="${totalPages}"/> pages.
+		
+		<div class="container mb-3">
+		  <div class="row align-items-start">
+		    <div class="col border border-info bg-info bg-opacity-10">Name</div>
+			<div class="col border border-info bg-info bg-opacity-10">Votes</div>
+			<div class="col border border-info bg-info bg-opacity-10">Deleted</div>
+			<div class="col border border-info bg-info bg-opacity-10">Actions</div>
+		  </div>
+		  <div class="row align-items-start" th:each="poll: ${polls}">
+  		    <div class="col border" th:text="${poll.name}"/>
+  			<div class="col border" th:text="${poll.choices.size()}" />
+  			<div class="col border" th:text="${{poll.deleted}}" />
+  			<div class="col border">
+			  <a th:href="@{/delete(id=${poll.id})}">Delete</a>
+			  <a th:href="@{/vote(id=${poll.id})}">Participate</a>
+			  <a th:href="@{/results(id=${poll.id})}">Show results</a>
 			</div>
+  		  </div>
+		</div>
+		
+		<div class="container mb-3">
+		  <div class="row align-items-start"></div>
+		  <nav aria-label="Page navigation">
+		    <ul class="pagination">
+		      <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'"><a class="page-link" th:href="${currentPage == 1} ? '#' : '@{/list(p=${currentPage-1})}'">Previous</a></li>
+		      <!--<li class="page-item"><a class="page-link" href="#">1</a></li>
+		      <li class="page-item"><a class="page-link" href="#">2</a></li>
+		      <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+		      <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'"><a class="page-link" th:href="${currentPage == totalPages} ? '#' : '@{/list(p=${currentPage+1})}'">Next</a></li>
+		    </ul>
+		  </nav>
 		</div>
 	</div>
 </body>

@@ -3,31 +3,22 @@
 <head> 
     <title>Vote</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<div class="container">
 	  <form class="form-vote" method="POST" th:action="@{/vote(id=${id})}" th:object="${voteForm}">
 	    <h2 class="form-heading">Please select your choices and vote!</h2>
 	    <div class="form-group">
-			<table>
-				<thead>
-					<th>Choice</th>
-					<th>Name</th>
-				</thead>
-				<tbody>
-				    <tr th:each="choice: ${choices}">
-						<td>
-							<input type="checkbox" th:field="*{selected}" th:value="${choice.id}" />
-						</td>
-						<td>
-							<label th:for="${#ids.prev('selected')}" th:text="${choice.name}" />
-						</td>
-				    </tr>
-				</tbody>
-			</table>
-			
-	        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	        <button class="btn btn-lg btn-primary btn-block" type="submit">Vote</button>
+		  <div class="form-check" th:each="choice: ${choices}">
+		    <input class="form-check-input" type="checkbox" th:value="${choice.id}" th:field="*{selected}"/>
+		    <label class="form-check-label" th:for="${#ids.prev('selected')}" th:text="${choice.name}"/>
+		  </div>
+		
+		  <div class="btn-group" role="group" aria-label="Vote Button Box">
+		    <button class="btn btn-primary" type="submit">Vote</button>
+		  </div>
 	    </div>
 	  </form>
 	</div>

@@ -60,8 +60,8 @@ public class CreateController {
 			return "create";
 		}
 		
-		List<String> topics = Arrays.asList(createForm.getTopics().split(","));
-		if (topics.isEmpty()) {
+		List<String> topics = Arrays.asList(createForm.getTopics().split("\\r?\\n"));
+		if (createForm.getTopics().isBlank() || topics.isEmpty()) {
 			model.addAttribute("topics_error", "Topics may not be empty!");
 			model.addAttribute("form", new CreateForm());
 			return "create";
