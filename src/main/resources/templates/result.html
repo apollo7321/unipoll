@@ -14,14 +14,20 @@
         <h3 th:text="${name}"></h3>
 
         <div class="container mb-3">
-            <div class="row align-items-start">
-                <div class="col border border-info bg-info bg-opacity-10">Choice</div>
-                <div class="col border border-info bg-info bg-opacity-10">Votes</div>
-            </div>
-            <div class="row align-items-start" th:each="result: ${results}">
-                <div class="col border" th:text="${result.name}" />
-                <div class="col border" th:text="${result.count}" />
-            </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Choice</th>
+                        <th>Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="result: ${results}">
+                        <td th:text="${result.name}" />
+                        <td th:text="${result.count}" />
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
