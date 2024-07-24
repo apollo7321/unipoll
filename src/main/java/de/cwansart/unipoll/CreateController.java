@@ -69,7 +69,7 @@ public class CreateController {
 		
 		Poll poll = new Poll();
 		poll.setName(createForm.getName());
-		poll.setChoices(topics.stream().map(t -> new Choice(t)).collect(Collectors.toList()));
+		poll.setChoices(topics.stream().map(t -> new UChoice(t)).collect(Collectors.toList()));
 		poll = repo.save(poll);
 		return "redirect:/vote?id=" + poll.getId();
 	}

@@ -5,15 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+// for some reason compilation fails when this class is just called "Choice"
 @Entity
-public class Choice {
+public class UChoice {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private String name;
 	
-	public Choice() {}
-	public Choice(String name) {
+	public UChoice() {}
+	public UChoice(String name) {
 		this.name = name;
 	}
 	

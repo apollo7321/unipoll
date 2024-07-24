@@ -16,7 +16,7 @@ public class Vote {
 	private Long id;
 	
 	@ManyToAny
-	private List<Choice> choices;
+	private List<UChoice> choices;
 	
 	@ManyToOne
 	private Poll poll;
@@ -30,10 +30,10 @@ public class Vote {
 		this.id = id;
 	}
 	
-	public List<Choice> getChoices() {
+	public List<UChoice> getChoices() {
 		return choices;
 	}
-	public void setChoices(List<Choice> choices) {
+	public void setChoices(List<UChoice> choices) {
 		this.choices = choices;
 	}
 	

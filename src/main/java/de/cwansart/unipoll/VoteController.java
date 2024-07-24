@@ -99,10 +99,10 @@ public class VoteController {
 		}
 		
 		// check if selected ids belong to the given poll
-		List<Choice> choices = new ArrayList<>();
+		List<UChoice> choices = new ArrayList<>();
 		for(String s: voteForm.getSelected()) {
 			long sLong = Long.parseLong(s);
-			Optional<Choice> choice = poll.get().getChoices().stream().filter(t -> t.getId().equals(sLong)).findFirst();
+			Optional<UChoice> choice = poll.get().getChoices().stream().filter(t -> t.getId().equals(sLong)).findFirst();
 			if (choice.isPresent()) {
 				choices.add(choice.get());
 			} else {

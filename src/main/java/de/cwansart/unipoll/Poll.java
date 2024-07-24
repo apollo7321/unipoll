@@ -19,7 +19,7 @@ public class Poll {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Choice> choices;
+	private List<UChoice> choices;
 	
 	private boolean deleted;
 		
@@ -30,10 +30,10 @@ public class Poll {
 		this.id = id;
 	}
 	
-	public List<Choice> getChoices() {
+	public List<UChoice> getChoices() {
 		return choices;
 	}
-	public void setChoices(List<Choice> choices) {
+	public void setChoices(List<UChoice> choices) {
 		this.choices = choices;
 	}
 	
