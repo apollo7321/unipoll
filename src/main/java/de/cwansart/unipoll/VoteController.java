@@ -1,8 +1,10 @@
 package de.cwansart.unipoll;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 class ChoiceElement {
 	private int id;
@@ -67,10 +71,9 @@ public class VoteController {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
 		}
 		
-		String userId = request.getRemoteAddr();
-		
+		Optional<Cookie> userIdCookie = Arrays.asList(request.getCookies()).stream().filter(c -> c.getName().equals("unipoll-user-id")).findFirst();
 		// check if user already voted
-		if (voteRepo.findByIdAndUserId(id, userId).isPresent()) {
+		if (userIdCookie.isPresent() && voteRepo.findByPollIdAndUserId(id, userIdCookie.get().getValue()).isPresent()) {
 			return "redirect:/results?id=" + id + "&v=1";
 		}
 		model.addAttribute("choices", poll.get().getChoices());
@@ -84,17 +87,17 @@ public class VoteController {
 			@RequestParam(name = "id", required = true) long id,
 			@ModelAttribute("voteForm") VoteForm voteForm, 
 			Model model, 
-			HttpServletRequest request
+			HttpServletResponse response
 	) {
 		Optional<Poll> poll = pollRepo.findById(id);
 		if (poll.isEmpty()) {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
 		}
 		
-		String userId = request.getRemoteAddr();
+		String userId = UUID.randomUUID().toString();
 		
 		// check if user has already voted
-		if (voteRepo.findByIdAndUserId(id, userId).isPresent()) {
+		if (voteRepo.findByPollIdAndUserId(id, userId).isPresent()) {
 			return "redirect:/results?id=" + id + "&v=1";
 		}
 		
@@ -115,6 +118,9 @@ public class VoteController {
 		vote.setChoices(choices);
 		vote.setUserId(userId);
 		voteRepo.save(vote);
+		
+		response.addCookie(new Cookie("unipoll-user-id", userId));
+		
 		return "redirect:/vote?id=" + id;
 	}
 }
