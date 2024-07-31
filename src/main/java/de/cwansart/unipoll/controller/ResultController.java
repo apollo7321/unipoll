@@ -1,4 +1,4 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,38 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import de.cwansart.unipoll.entity.Poll;
+import de.cwansart.unipoll.entity.Vote;
+import de.cwansart.unipoll.model.Result;
+import de.cwansart.unipoll.repository.PollRepository;
+import de.cwansart.unipoll.repository.VoteRepository;
 import jakarta.servlet.http.HttpServletRequest;
-
-class Result {
-	private long id;
-	private String name;
-	private long count;
-	
-	public Result(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public long getCount() {
-		return count;
-	}
-	public void setCount(long count) {
-		this.count = count;
-	}
-}
 
 @Controller
 public class ResultController {

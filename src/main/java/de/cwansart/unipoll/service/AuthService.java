@@ -1,4 +1,4 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.service;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

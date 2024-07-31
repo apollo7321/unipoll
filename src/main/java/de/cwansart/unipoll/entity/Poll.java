@@ -1,4 +1,4 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.entity;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class Poll {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<UChoice> choices;
+	private List<Choice> choices;
 	
 	private boolean deleted;
 		
@@ -30,10 +30,10 @@ public class Poll {
 		this.id = id;
 	}
 	
-	public List<UChoice> getChoices() {
+	public List<Choice> getChoices() {
 		return choices;
 	}
-	public void setChoices(List<UChoice> choices) {
+	public void setChoices(List<Choice> choices) {
 		this.choices = choices;
 	}
 	

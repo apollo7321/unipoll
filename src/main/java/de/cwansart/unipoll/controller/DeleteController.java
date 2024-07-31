@@ -1,4 +1,4 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.controller;
 
 import java.util.Optional;
 
@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
+
+import de.cwansart.unipoll.entity.Poll;
+import de.cwansart.unipoll.repository.PollRepository;
+import de.cwansart.unipoll.service.AuthService;
 
 @Controller
 public class DeleteController {

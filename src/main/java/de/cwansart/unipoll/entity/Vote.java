@@ -1,4 +1,4 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.entity;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class Vote {
 	private Long id;
 	
 	@ManyToAny
-	private List<UChoice> choices;
+	private List<Choice> choices;
 	
 	@ManyToOne
 	private Poll poll;
@@ -30,10 +30,10 @@ public class Vote {
 		this.id = id;
 	}
 	
-	public List<UChoice> getChoices() {
+	public List<Choice> getChoices() {
 		return choices;
 	}
-	public void setChoices(List<UChoice> choices) {
+	public void setChoices(List<Choice> choices) {
 		this.choices = choices;
 	}
 	

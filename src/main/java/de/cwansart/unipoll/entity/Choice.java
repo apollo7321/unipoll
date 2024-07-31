@@ -1,20 +1,19 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-// for some reason compilation fails when this class is just called "Choice"
 @Entity
-public class UChoice {
+public class Choice {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private String name;
 	
-	public UChoice() {}
-	public UChoice(String name) {
+	public Choice() {}
+	public Choice(String name) {
 		this.name = name;
 	}
 	

@@ -1,9 +1,11 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.Repository;
+
+import de.cwansart.unipoll.entity.Vote;
 
 public interface VoteRepository extends Repository<Vote, Long> {
 	Vote save(Vote vote);

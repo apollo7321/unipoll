@@ -1,4 +1,4 @@
-package de.cwansart.unipoll;
+package de.cwansart.unipoll.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,41 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import de.cwansart.unipoll.entity.Choice;
+import de.cwansart.unipoll.entity.Poll;
+import de.cwansart.unipoll.entity.Vote;
+import de.cwansart.unipoll.model.VoteForm;
+import de.cwansart.unipoll.repository.PollRepository;
+import de.cwansart.unipoll.repository.VoteRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-class ChoiceElement {
-	private int id;
-	private String name;
-	public ChoiceElement() {
-	}
-	public ChoiceElement(String name, int id) {
-		this.id = id;
-		this.name = name;
-	}
-	public int getId() {
-		return id;
-	}
-	public String getName() {
-		return name;
-	}
-}
-
-class VoteForm {
-	private List<String> selected;
-	public VoteForm() {
-	}
-	public VoteForm(List<String> selected) {
-		this.selected = selected;
-	}
-	public List<String> getSelected() {
-		return selected;
-	}
-	public void setSelected(List<String> selected) {
-		this.selected = selected;
-	}
-}
 
 @Controller
 public class VoteController {
@@ -102,10 +76,10 @@ public class VoteController {
 		}
 		
 		// check if selected ids belong to the given poll
-		List<UChoice> choices = new ArrayList<>();
+		List<Choice> choices = new ArrayList<>();
 		for(String s: voteForm.getSelected()) {
 			long sLong = Long.parseLong(s);
-			Optional<UChoice> choice = poll.get().getChoices().stream().filter(t -> t.getId().equals(sLong)).findFirst();
+			Optional<Choice> choice = poll.get().getChoices().stream().filter(t -> t.getId().equals(sLong)).findFirst();
 			if (choice.isPresent()) {
 				choices.add(choice.get());
 			} else {
