@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Poll {
@@ -20,6 +21,9 @@ public class Poll {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Choice> choices;
+	
+	@Transient
+	private long participants;
 	
 	private boolean deleted;
 		
@@ -49,5 +53,12 @@ public class Poll {
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	public void setParticipants(long participants) {
+		this.participants = participants;
+	}
+	public long getParticipants() {
+		return participants;
 	}
 }

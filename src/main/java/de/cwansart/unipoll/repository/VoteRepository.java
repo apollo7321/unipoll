@@ -12,5 +12,6 @@ public interface VoteRepository extends Repository<Vote, Long> {
 	Optional<Vote> findById(Long id);
 	Optional<Vote> findByPollIdAndUserId(Long pollId, String userId);
 	List<Vote> findByPollId(Long pollId);
+	long countByPollId(Long pollId);
 	long countById(Long id);
 }

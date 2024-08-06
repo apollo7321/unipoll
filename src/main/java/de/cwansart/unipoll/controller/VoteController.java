@@ -45,7 +45,9 @@ public class VoteController {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
 		}
 		
-		Optional<Cookie> userIdCookie = Arrays.asList(request.getCookies()).stream().filter(c -> c.getName().equals("unipoll-user-id")).findFirst();
+		Optional<Cookie> userIdCookie = request.getCookies() != null ?
+				Arrays.asList(request.getCookies()).stream().filter(c -> c.getName().equals("unipoll-user-id")).findFirst() :
+				Optional.empty();
 		// check if user already voted
 		if (userIdCookie.isPresent() && voteRepo.findByPollIdAndUserId(id, userIdCookie.get().getValue()).isPresent()) {
 			return "redirect:/results?id=" + id + "&v=1";

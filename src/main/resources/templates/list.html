@@ -16,13 +16,13 @@
         <div class="container mb-3">
             <div class="row align-items-start">
                 <div class="col border border-info bg-info bg-opacity-10">Name</div>
-                <div class="col border border-info bg-info bg-opacity-10">Votes</div>
+                <div class="col border border-info bg-info bg-opacity-10">Participants</div>
                 <div class="col border border-info bg-info bg-opacity-10">Deleted</div>
                 <div class="col border border-info bg-info bg-opacity-10">Actions</div>
             </div>
             <div class="row align-items-start" th:each="poll: ${polls}">
                 <div class="col border" th:text="${poll.name}" />
-                <div class="col border" th:text="${poll.choices.size()}" />
+                <div class="col border" th:text="${poll.participants}" />
                 <div class="col border" th:text="${{poll.deleted}}" />
                 <div class="col border">
                     <a th:href="@{/delete(id=${poll.id})}">Delete</a>

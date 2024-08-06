@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import de.cwansart.unipoll.entity.Poll;
 import de.cwansart.unipoll.repository.PollRepository;
+import de.cwansart.unipoll.repository.VoteRepository;
 import de.cwansart.unipoll.service.AuthService;
 
 @Controller
 public class ListController {
 	@Autowired
 	private PollRepository pollRepo;
+	
+	@Autowired
+	private VoteRepository voteRepo;
 	
 	@Autowired
 	private AuthService auth;
@@ -28,6 +32,7 @@ public class ListController {
 		}
 		
 		Page<Poll> polls = pollRepo.findAll(PageRequest.of(page, 20, Sort.by(Sort.Direction.ASC, "id")));
+		polls.getContent().forEach(p -> p.setParticipants(voteRepo.countByPollId(p.getId())));
 		model.addAttribute("polls", polls.getContent());
 		model.addAttribute("totalNum", polls.getTotalElements());
 		model.addAttribute("totalPages", polls.getTotalPages());
