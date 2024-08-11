@@ -17,7 +17,7 @@
             <div class="row align-items-start">
                 <div class="col border border-info bg-info bg-opacity-10">Name</div>
                 <div class="col border border-info bg-info bg-opacity-10">Participants</div>
-                <div class="col border border-info bg-info bg-opacity-10">Deleted</div>
+                <div class="col border border-info bg-info bg-opacity-10">Closed</div>
                 <div class="col border border-info bg-info bg-opacity-10">Actions</div>
             </div>
             <div class="row align-items-start" th:each="poll: ${polls}">
@@ -25,7 +25,7 @@
                 <div class="col border" th:text="${poll.participants}" />
                 <div class="col border" th:text="${{poll.deleted}}" />
                 <div class="col border">
-                    <a th:href="@{/delete(id=${poll.id})}">Delete</a>
+                    <a th:href="@{/delete(id=${poll.id})}">Close</a>
                     <a th:href="@{/vote(id=${poll.id})}">Participate</a>
                     <a th:href="@{/results(id=${poll.id})}">Show results</a>
                 </div>
@@ -38,9 +38,6 @@
                 <ul class="pagination">
                     <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'"><a class="page-link"
                             th:href="${currentPage == 1} ? '#' : '@{/list(p=${currentPage-1})}'">Previous</a></li>
-                    <!--<li class="page-item"><a class="page-link" href="#">1</a></li>
-		      <li class="page-item"><a class="page-link" href="#">2</a></li>
-		      <li class="page-item"><a class="page-link" href="#">3</a></li>-->
                     <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'"><a
                             class="page-link"
                             th:href="${currentPage == totalPages} ? '#' : '@{/list(p=${currentPage+1})}'">Next</a></li>
@@ -49,5 +46,4 @@
         </div>
     </div>
 </body>
-
 </html>

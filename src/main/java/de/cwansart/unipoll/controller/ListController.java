@@ -16,27 +16,27 @@ import de.cwansart.unipoll.service.AuthService;
 
 @Controller
 public class ListController {
-	@Autowired
-	private PollRepository pollRepo;
-	
-	@Autowired
-	private VoteRepository voteRepo;
-	
-	@Autowired
-	private AuthService auth;
-	
-	@GetMapping("/list")
-	public String showAll(@RequestParam(name = "p", defaultValue = "0") int page, Model model) {
-		if (!auth.isAuthenticated()) {
-			return "redirect:/login?p=list";
-		}
-		
-		Page<Poll> polls = pollRepo.findAll(PageRequest.of(page, 20, Sort.by(Sort.Direction.ASC, "id")));
-		polls.getContent().forEach(p -> p.setParticipants(voteRepo.countByPollId(p.getId())));
-		model.addAttribute("polls", polls.getContent());
-		model.addAttribute("totalNum", polls.getTotalElements());
-		model.addAttribute("totalPages", polls.getTotalPages());
-		model.addAttribute("currentPage", page + 1);
-		return "list";
-	}
+    @Autowired
+    private PollRepository pollRepo;
+
+    @Autowired
+    private VoteRepository voteRepo;
+
+    @Autowired
+    private AuthService auth;
+
+    @GetMapping("/list")
+    public String showAll(@RequestParam(name = "p", defaultValue = "0") int page, Model model) {
+        if (!auth.isAuthenticated()) {
+            return "redirect:/login?p=list";
+        }
+
+        Page<Poll> polls = pollRepo.findAll(PageRequest.of(page, 20, Sort.by(Sort.Direction.ASC, "id")));
+        polls.getContent().forEach(p -> p.setParticipants(voteRepo.countByPollId(p.getId())));
+        model.addAttribute("polls", polls.getContent());
+        model.addAttribute("totalNum", polls.getTotalElements());
+        model.addAttribute("totalPages", polls.getTotalPages());
+        model.addAttribute("currentPage", page + 1);
+        return "list";
+    }
 }

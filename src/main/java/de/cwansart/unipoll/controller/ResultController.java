@@ -21,36 +21,32 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class ResultController {
-	@Autowired
-	private PollRepository pollRepo;
-	
-	@Autowired 
-	private VoteRepository voteRepo;
-	
-	@GetMapping("/results")
-	public String show(
-			@RequestParam(name = "id", required = true) Long id, 
-			Model model,
-			HttpServletRequest request
-	) {
-		Optional<Poll> poll = pollRepo.findById(id);
-		if (poll.isEmpty()) {
-			throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
-		}
+    @Autowired
+    private PollRepository pollRepo;
 
-		List<Result> results = poll.get().getChoices().stream().map(c -> new Result(c.getId(), c.getName())).collect(Collectors.toList());
-		List<Vote> votes = voteRepo.findByPollId(id);
-		votes.forEach(v -> {
-			v.getChoices().forEach(c -> {
-				results.stream().filter(r -> c.getId().equals(r.getId()))
-				                .findFirst()
-				                .ifPresent(r -> r.setCount(r.getCount() + 1));
-			});
-		});
-		
-		model.addAttribute("results", results);
-		model.addAttribute("id", id);
-		model.addAttribute("name", poll.get().getName());
-		return "result";
-	}
+    @Autowired
+    private VoteRepository voteRepo;
+
+    @GetMapping("/results")
+    public String show(@RequestParam(name = "id", required = true) Long id, Model model, HttpServletRequest request) {
+        Optional<Poll> poll = pollRepo.findById(id);
+        if (poll.isEmpty()) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
+        }
+
+        List<Result> results = poll.get().getChoices().stream().map(c -> new Result(c.getId(), c.getName()))
+                .collect(Collectors.toList());
+        List<Vote> votes = voteRepo.findByPollId(id);
+        votes.forEach(v -> {
+            v.getChoices().forEach(c -> {
+                results.stream().filter(r -> c.getId().equals(r.getId())).findFirst()
+                        .ifPresent(r -> r.setCount(r.getCount() + 1));
+            });
+        });
+
+        model.addAttribute("results", results);
+        model.addAttribute("id", id);
+        model.addAttribute("name", poll.get().getName());
+        return "result";
+    }
 }

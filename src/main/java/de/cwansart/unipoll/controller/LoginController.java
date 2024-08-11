@@ -15,31 +15,32 @@ import de.cwansart.unipoll.service.AuthService;
 
 @Controller
 public class LoginController {
-	@Autowired
-	private AuthService auth;
-	
-	@GetMapping("/login")
-	public String login(@RequestParam(name = "p", required = true) String page, Model model) {
-		if (auth.isAuthenticated()) {
-			return "redirect:/" + page;
-		}
-		model.addAttribute("loginForm", new LoginForm());
-		model.addAttribute("page", page);
-		return "login";
-	}
-	
-	@PostMapping("/login")
-	public String doLogin(@ModelAttribute("loginForm") LoginForm loginForm, @RequestParam(name = "p", required = true) String page, Model model) {
-		if (!auth.login(loginForm.getPassword())) {
-			model.addAttribute("error", "Invalid password!");
-			model.addAttribute("loginForm", new LoginForm());
-			model.addAttribute("page", page);
-			return "login";
-		} else {
-			if (!page.equals("create") && !page.equals("list")) {
-				throw new ResponseStatusException(HttpStatusCode.valueOf(400), "unknown redirect page");
-			}
-			return "redirect:/" + page;
-		}
-	}
+    @Autowired
+    private AuthService auth;
+
+    @GetMapping("/login")
+    public String login(@RequestParam(name = "p", required = true) String page, Model model) {
+        if (auth.isAuthenticated()) {
+            return "redirect:/" + page;
+        }
+        model.addAttribute("loginForm", new LoginForm());
+        model.addAttribute("page", page);
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String doLogin(@ModelAttribute("loginForm") LoginForm loginForm,
+            @RequestParam(name = "p", required = true) String page, Model model) {
+        if (!auth.login(loginForm.getPassword())) {
+            model.addAttribute("error", "Invalid password!");
+            model.addAttribute("loginForm", new LoginForm());
+            model.addAttribute("page", page);
+            return "login";
+        } else {
+            if (!page.equals("create") && !page.equals("list")) {
+                throw new ResponseStatusException(HttpStatusCode.valueOf(400), "unknown redirect page");
+            }
+            return "redirect:/" + page;
+        }
+    }
 }
