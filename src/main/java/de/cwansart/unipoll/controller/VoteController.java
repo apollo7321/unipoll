@@ -95,7 +95,10 @@ public class VoteController {
         vote.setUserId(userId);
         voteRepo.save(vote);
 
-        response.addCookie(new Cookie("unipoll-user-id", userId));
+        Cookie cookie = new Cookie("unipoll-user-id", userId);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        response.addCookie(cookie);
 
         return "redirect:/vote?id=" + id;
     }
