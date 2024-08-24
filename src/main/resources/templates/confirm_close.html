@@ -10,11 +10,12 @@
 
 <body>
     <div class="container">
-        <form class="form-create" method="POST" th:action="@{/delete(id=${id})}">
+        <form class="form-create" method="POST" th:action="@{/close(id=${id})}">
             <h2 class="form-heading">Confirm Close</h2>
 
             <div class="form-group">
                 <h3 th:text="${'Are you sure you want to close poll #' + id + '?'}" />
+                <h4 th:text="${name}"></h4>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Close</button>
             </div>

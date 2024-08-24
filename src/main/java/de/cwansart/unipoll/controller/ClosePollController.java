@@ -39,11 +39,12 @@ public class ClosePollController {
         }
 
         model.addAttribute("id", id);
+        model.addAttribute("name", poll.get().getName());
         return "confirm_close";
     }
 
     @PostMapping("/close")
-    public String delete(@RequestParam(name = "id", required = true) long id, Model model) {
+    public String close(@RequestParam(name = "id", required = true) long id, Model model) {
         if (!auth.isAuthenticated()) {
             return "redirect:/login?p=list";
         }

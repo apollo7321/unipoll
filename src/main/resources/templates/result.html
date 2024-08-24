@@ -12,6 +12,9 @@
     <div class="container">
         <h2 class="form-heading" th:text="${'Results for poll #' + id}"></h2>
         <h3 th:text="${name}"></h3>
+        <div th:if="${closed}" class="alert alert-info" role="alert">
+          This poll has been closed.
+        </div>
 
         <div class="container mb-3">
             <table class="table table-striped table-bordered">

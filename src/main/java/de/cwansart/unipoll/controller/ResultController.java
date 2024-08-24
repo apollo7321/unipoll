@@ -47,6 +47,7 @@ public class ResultController {
         model.addAttribute("results", results);
         model.addAttribute("id", id);
         model.addAttribute("name", poll.get().getName());
+        model.addAttribute("closed", poll.get().isDeleted());
         return "result";
     }
 }

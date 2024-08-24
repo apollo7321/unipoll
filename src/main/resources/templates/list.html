@@ -13,6 +13,10 @@
         <h2 class="form-heading">List of all polls</h2>
         <h3 th:text="${'Total of ' + totalNum + ' polls.'}" />
 
+        <div class="float-right">
+            <a href="/create" class="text-primary">Create a new poll</a>
+        </div>
+        
         <div class="container mb-3">
             <div class="row align-items-start">
                 <div class="col border border-info bg-info bg-opacity-10">Name</div>
@@ -25,22 +29,22 @@
                 <div class="col border" th:text="${poll.participants}" />
                 <div class="col border" th:text="${{poll.deleted}}" />
                 <div class="col border">
-                    <a th:href="@{/delete(id=${poll.id})}">Close</a>
-                    <a th:href="@{/vote(id=${poll.id})}">Participate</a>
-                    <a th:href="@{/results(id=${poll.id})}">Show results</a>
+                    <a th:href="@{/vote(id=${poll.id})}" class="text-primary">Participate</a>
+                    <a th:href="@{/results(id=${poll.id})}" class="text-secondary">Show results</a>
+                    <a th:unless="${poll.deleted}" th:href="@{/close(id=${poll.id})}" class="text-danger">Close</a>
                 </div>
             </div>
         </div>
 
-        <div class="container mb-3">
+        <div class="container mb-3" th:if="${totalPages > 1}">
             <div class="row align-items-start"></div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:class="${currentPage == 1} ? 'page-item disabled' : 'page-item'"><a class="page-link"
-                            th:href="${currentPage == 1} ? '#' : '@{/list(p=${currentPage-1})}'">Previous</a></li>
-                    <li th:class="${currentPage == totalPages} ? 'page-item disabled' : 'page-item'"><a
+                            th:href="${currentPage == 1} ? '#' : @{/list(p=${currentPage-1})}">Previous</a></li>
+                    <li th:class="${totalPages > 1 && currentPage == totalPages} ? 'page-item disabled' : 'page-item'"><a
                             class="page-link"
-                            th:href="${currentPage == totalPages} ? '#' : '@{/list(p=${currentPage+1})}'">Next</a></li>
+                            th:href="${totalPages > 1  && currentPage == totalPages} ? '#' : @{/list(p=${currentPage+1})}">Next</a></li>
                 </ul>
             </nav>
         </div>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Vote</title>
+    <title th:text="${'Vote for ' + name}" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <script src="/js/bootstrap.bundle.min.js"></script>
@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <form class="form-vote" method="POST" th:action="@{/vote(id=${id})}" th:object="${voteForm}">
-            <h2 class="form-heading">Please select your choices and vote!</h2>
+            <h2 class="form-heading" th:text="${name}"/>
             <div class="form-group">
                 <div class="form-check" th:each="choice: ${choices}">
                     <input class="form-check-input" type="checkbox" th:value="${choice.id}" th:field="*{selected}" />

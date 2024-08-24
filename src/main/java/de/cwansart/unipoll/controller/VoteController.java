@@ -40,6 +40,10 @@ public class VoteController {
         if (poll.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
         }
+        
+        if (poll.get().isDeleted()) {
+            return "redirect:/results?id=" + id + "&c=1";
+        }
 
         Optional<Cookie> userIdCookie = request.getCookies() != null ? Arrays.asList(request.getCookies()).stream()
                 .filter(c -> c.getName().equals("unipoll-user-id")).findFirst() : Optional.empty();
@@ -50,6 +54,7 @@ public class VoteController {
         model.addAttribute("choices", poll.get().getChoices());
         model.addAttribute("voteForm", new VoteForm());
         model.addAttribute("id", id);
+        model.addAttribute("name", poll.get().getName());
         return "vote";
     }
 
@@ -59,6 +64,10 @@ public class VoteController {
         Optional<Poll> poll = pollRepo.findById(id);
         if (poll.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(404), "poll does not exist");
+        }
+        
+        if (poll.get().isDeleted()) {
+            return "redirect:/results?id=" + id + "&c=1";
         }
 
         String userId = UUID.randomUUID().toString();
