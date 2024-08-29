@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div th:replace="navbar.html"></div>
     <div class="container">
         <form class="form-create" method="POST" th:action="@{/close(id=${id})}">
             <h2 class="form-heading">Confirm Close</h2>

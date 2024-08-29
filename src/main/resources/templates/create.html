@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div th:replace="navbar.html"></div>
     <div class="container">
         <form class="form-create" method="POST" th:action="@{/create}" th:object="${createForm}">
             <h2 class="form-heading">Create New Poll</h2>

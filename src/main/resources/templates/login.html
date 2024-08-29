@@ -9,8 +9,8 @@
 </head>
 
 <body>
+    <div th:replace="navbar.html"></div>
     <div class="container">
-
         <form class="form-signin" method="POST" th:action="@{/login(p=${page})}" th:object="${loginForm}">
             <h2 class="form-heading">Log in</h2>
 

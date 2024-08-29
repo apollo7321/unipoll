@@ -1,18 +1,38 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-	<title>Links</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link href="/css/bootstrap.min.css" rel="stylesheet">
-	<script src="/js/bootstrap.bundle.min.js"></script>
+    <title>Links</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-	<ul>
-		<li><a href="/create">Create a new poll</a></li>
-		<li><a href="/list">List all polls</a></li>
-	</ul>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand">Unipoll</a>
+        <button class="btn btn-sm btn-outline-secondary" type="button" id="theme-switch">switch dark/light theme</button>
+      </div>
+    </nav>
+    <script>
+        const h = document.querySelector('html')
+        const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)")
+        if (darkThemeMq.matches) {
+            h.setAttribute('data-bs-theme', 'dark')
+        } else {
+            h.setAttribute('data-bs-theme', 'light');
+        }
+        
+        document.querySelectorAll('#theme-switch').forEach(d => {
+            d.addEventListener('click', () => {
+                const t = h.getAttribute('data-bs-theme') == 'dark' ? 'light' : 'dark'
+                h.setAttribute('data-bs-theme', t);
+            })
+        })
+    </script>
+    <ul>
+        <li><a href="/create">Create a new poll</a></li>
+        <li><a href="/list">List all polls</a></li>
+    </ul>
 </body>
-
 </html>
