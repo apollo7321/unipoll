@@ -16,17 +16,24 @@
     </nav>
     <script>
         const h = document.querySelector('html')
-        const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)")
-        if (darkThemeMq.matches) {
-            h.setAttribute('data-bs-theme', 'dark')
+        const userPrefTheme = localStorage.getItem('theme')
+        if (userPrefTheme) {
+            const t = userPrefTheme === "dark" ? 'dark' : 'light'
+            h.setAttribute('data-bs-theme', t)
         } else {
-            h.setAttribute('data-bs-theme', 'light');
+            const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)")
+            if (darkThemeMq.matches) {
+                h.setAttribute('data-bs-theme', 'dark')
+            } else {
+                h.setAttribute('data-bs-theme', 'light');
+            }
         }
         
         document.querySelectorAll('#theme-switch').forEach(d => {
             d.addEventListener('click', () => {
                 const t = h.getAttribute('data-bs-theme') == 'dark' ? 'light' : 'dark'
-                h.setAttribute('data-bs-theme', t);
+                h.setAttribute('data-bs-theme', t)
+                localStorage.setItem('theme', t)
             })
         })
     </script>
